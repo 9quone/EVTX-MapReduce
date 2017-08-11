@@ -12,9 +12,8 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
-//vv WholeFileRecordReader
-public class WholeFileRecordReader extends RecordReader<NullWritable, BytesWritable> {
 
+public class WholeFileRecordReader extends RecordReader<NullWritable, BytesWritable> {
 	private FileSplit fileSplit;
 	private Configuration conf;
 	private BytesWritable value = new BytesWritable();
@@ -63,6 +62,6 @@ public class WholeFileRecordReader extends RecordReader<NullWritable, BytesWrita
 
 	@Override
 	public void close() throws IOException {
-		// do nothing
+		// Do Nothing
 	}
 }

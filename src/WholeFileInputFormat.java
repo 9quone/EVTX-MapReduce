@@ -7,7 +7,6 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.*;
 
-//vv WholeFileInputFormat
 public class WholeFileInputFormat extends FileInputFormat<NullWritable, BytesWritable> {
 	@Override
 	protected boolean isSplitable(JobContext context, Path file) {

@@ -1,15 +1,11 @@
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.BytesWritable;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -20,9 +16,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class WinEventParser {
 	public static class EventIDMapper extends Mapper<NullWritable, BytesWritable, Text, Text> {
-		private Text eventID = new Text();
-		private Text time = new Text();
-		
 		public void map(NullWritable key, BytesWritable value, Context context) throws IOException, InterruptedException {
 			byte[] data = value.getBytes();
 			final int fileH = 4096;
@@ -95,7 +88,7 @@ public class WinEventParser {
 	public static class EventIDReducer extends Reducer<Text, Text, Text, Text> {
 		public void reduce(Text eventID, Iterable<Text> times, Context context) throws IOException, InterruptedException {
 			int incidents = 0;
-			for (Text t : times) {
+			for (@SuppressWarnings("unused") Text t : times) {
 				incidents++;
 			}
 			context.write(eventID, new Text("" + incidents));
@@ -104,7 +97,7 @@ public class WinEventParser {
 	
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "Event ID Sorter");
+		Job job = Job.getInstance(conf, "Win Event Parser");
 		job.setJarByClass(WinEventParser.class);
 		job.setMapperClass(EventIDMapper.class);
 		job.setReducerClass(EventIDReducer.class);
